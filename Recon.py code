@@ -1,0 +1,26 @@
+import requests
+from bs4 import BeautifulSoup, Comment
+import sys
+import urllib3
+import pyfiglet
+import time
+
+banner = pyfiglet.figlet_format("RECON!!")
+print(banner)
+
+time.sleep(2)
+
+if len(sys.argv) < 2:
+    print("É necessário informar a URL como argumento: ")
+    sys.exit(1)
+
+url = sys.argv[1] 
+
+requisicao = requests.get(url)
+
+print(requisicao.status_code)
+
+html = BeautifulSoup(requisicao.content, 'html.parser')
+
+comentarios = html.find_all(string=lambda text: isinstance(text, Comment))
+print(comentarios)
